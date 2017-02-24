@@ -23,6 +23,7 @@ type Move struct {
 
 type Moves []Move
 
+// populate is a unexported function which populates player moves read from input.
 func (m Moves) populate(line string) {
 	csvreader := csv.NewReader(strings.NewReader(line))
 	csvreader.Comma = ':'
@@ -36,6 +37,7 @@ func (m Moves) populate(line string) {
 
 type Grid [][]byte
 
+// String method useful to represent an Player Grid as per problem statement.
 func (g Grid) String() string {
 	// TODO(kaviraj): Fix extra space and newline edge case
 	var s string
@@ -48,6 +50,7 @@ func (g Grid) String() string {
 	return s
 }
 
+// populate unexported function used to populate player grid from input.
 func (g Grid) populate(line string) {
 	csvreader := csv.NewReader(strings.NewReader(line))
 	records, _ := csvreader.ReadAll()
@@ -58,6 +61,7 @@ func (g Grid) populate(line string) {
 	}
 }
 
+// New creates a new BattleGame instance by reading input from io.Reader.
 func New(r io.Reader) *Game {
 	var g Game
 	fmt.Fscanln(r, &g.M)
@@ -106,7 +110,15 @@ func New(r io.Reader) *Game {
 	return &g
 }
 
+// Play is real simulation based on input moves of both the player.
+// It calculates the player score using the moves from the input
 func (g *Game) Play() {
+
+	// NOTE(kaviraj):
+	// 1. Make all the moves (first Player1 then Player2 sequentially)
+	// 2. Calculate the score and update the grid
+	// 3. End the game once done with all the moves
+
 	for i := 0; i < len(g.Move1); i++ {
 		x, y := g.Move1[i].X, g.Move1[i].Y
 		if g.p1ShipCount != 0 && g.Grid2[x][y] == 'B' {
@@ -129,10 +141,14 @@ func (g *Game) Play() {
 	}
 }
 
+// P1Score should be called after invoking Play().
+// Gives the Player1 score
 func (g *Game) P1Score() int {
 	return g.p1score
 }
 
+// P2Score should be called after invoking Play().
+// Gives the Player2 score
 func (g *Game) P2Score() int {
 	return g.p2score
 }
