@@ -11,8 +11,9 @@ func TestNewGame(t *testing.T) {
 	var tests = []struct {
 		input                           io.Reader
 		expectedM, expectedS, expectedT int
-	}{{
-		input: strings.NewReader(`5
+	}{
+		{
+			input: strings.NewReader(`5
 5
 1:1,2:0,2:3,3:4,4:3
 0:1,2:3,3:0,3:4,4:1
@@ -20,10 +21,24 @@ func TestNewGame(t *testing.T) {
 0,1:4,3:2,3:3,1:4,1
 0,1:0,0:1,1:2,3:4,3
 `),
-		expectedM: 5,
-		expectedS: 5,
-		expectedT: 5,
-	}}
+			expectedM: 5,
+			expectedS: 5,
+			expectedT: 5,
+		},
+		{
+			input: strings.NewReader(`5
+3
+1:1,2:0,2:3
+0:1,2:3,3:0
+4
+0,1:4,3:2,3:3,1
+0,1:0,0:1,1:2,3
+`),
+			expectedM: 5,
+			expectedS: 3,
+			expectedT: 4,
+		},
+	}
 
 	for _, test := range tests {
 		output := New(test.input)
