@@ -152,3 +152,18 @@ func (g *Game) P1Score() int {
 func (g *Game) P2Score() int {
 	return g.p2score
 }
+
+func (g *Game) Result() string {
+	p1Score := g.P1Score()
+	p2Score := g.P2Score()
+	var r string
+	switch {
+	case p1Score > p2Score:
+		r = "Player 1 wins"
+	case p1Score < p2Score:
+		r = "Player 2 wins"
+	default:
+		r = "It is a draw"
+	}
+	return r
+}

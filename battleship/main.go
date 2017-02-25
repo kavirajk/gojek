@@ -20,11 +20,5 @@ func main() {
 	fmt.Println("P1:", p1Score)
 	fmt.Println("P2:", p2Score)
 
-	if p1Score > p2Score {
-		fmt.Println("P1 Won")
-	} else if p2Score > p2Score {
-		fmt.Println("P2 Won")
-	} else {
-		fmt.Println("It is a draw")
-	}
+	fmt.Println(g.Result())
 }
